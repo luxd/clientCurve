@@ -1,0 +1,11 @@
+#navbarResponsive {
+  clear: right;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn-link, .navbar-brand {
+  color: lightgray;
+}
