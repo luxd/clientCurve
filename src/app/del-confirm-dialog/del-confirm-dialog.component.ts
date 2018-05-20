@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'app-del-confirm-dialog',
   templateUrl: './del-confirm-dialog.component.html',
@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DelConfirmDialogComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  textConfirmation: string;
+
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }

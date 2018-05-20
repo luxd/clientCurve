@@ -1,3 +1,16 @@
-<p>
-  del-confirm-dialog works!
-</p>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body">
+      <h4 class="modal-title">Confirmation</h4>
+      <p>
+        {{textConfirmation}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="activeModal.close('Submit click')">Confirm
+      </button>
+      <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel click')">Cancel
+      </button>
+    </div>
+  </div>
+</div>

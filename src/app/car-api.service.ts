@@ -26,6 +26,7 @@ export class CarApiService {
   }
 
   public saveCar(car: Car): Observable<Car> {
+
     return this.http
       .post(API_URL + '/car', car)
       .map(response => {
@@ -34,6 +35,15 @@ export class CarApiService {
       .catch(this.handleError);
   }
 
+  public deleteCar(car: Car): Observable<any> {
+
+    return this.http
+      .delete(API_URL + '/car/' + car.carId)
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
   public getAllCarTypes(): Observable<CarType[]> {
     return this.http
       .get(API_URL + '/car_types')

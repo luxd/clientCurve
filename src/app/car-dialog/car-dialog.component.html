@@ -31,7 +31,8 @@
         <div class="form-group">
           <label for="list-cartype">Car Type</label>
 
-          <select class="form-control" id="list-carType" [(ngModel)]="car.carTypeId" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}">
+          <select class="form-control" id="list-carType" [(ngModel)]="car.carTypeId" [ngModelOptions]="{standalone: true}">
+            <option [value]="0">-- Select --</option>
             <option *ngFor="let carType of carTypes" [value]="carType.carTypeId" [attr.selected]="car.carTypeId==carType.carTypeId ? true : null">
               {{carType.carTypeName}}
             </option>
@@ -44,7 +45,7 @@
     </div>
     <div class="modal-footer">
       <!-- Create list on click, but disable if form is invalid -->
-      <button type="submit" class="btn btn-success" (click)="activeModal.close('Submit click')" [disabled]="!listForm.valid">{{submitButton}}
+      <button type="submit" class="btn btn-success" (click)="activeModal.close('Submit click')" [disabled]="!listForm.valid || car.carTypeId == 0">{{submitButton}}
       </button>
       <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel click')">Cancel
       </button>

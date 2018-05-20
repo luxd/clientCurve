@@ -37,38 +37,58 @@ export class CarListComponent implements OnInit {
   }
 
   onAddUpdate(car) {
-    console.log("parent p " + car.make);
+    let isAdd = false;
+    if (car.carId == 0) {
+      isAdd = true;
+    }
     this.carDataService
       .save(car)
       .subscribe(
         (newCar) => {
-          this.cars = this.cars.concat(newCar);
+          if (isAdd)
+            this.cars = this.cars.concat(newCar);
+          else
+            this.cars.map((car, i) => {
+              if (car.carId == newCar.carId) {
+                this.cars[i] = newCar;
+              }
+            });
         }
       );
   }
 
-  onAddCar(car, carTypes) {
-    this.open(car, carTypes, 'Insert New Car', 'Create');
+  onDelete(car) {
+    console.log("del")
+    this.carDataService
+      .delete(car)
+      .subscribe(
+        () => {
+          this.cars = this.cars.filter(item => item.carId !== car.carId);
+        }
+      );
   }
+  // onAddCar(car, carTypes) {
+  //   this.open(car, carTypes, 'Insert New Car', 'Create');
+  // }
 
 
 
-  private open(car: Car, carTypes: CarType[], title: string, submitButton: string) {
-    const modalRef = this.modalService.open(CarDialogComponent, { backdrop: 'static' });
-    modalRef.componentInstance.title = title;
-    modalRef.componentInstance.submitButton = submitButton;
-    modalRef.componentInstance.car = car;
-    modalRef.componentInstance.carTypes = carTypes;
-    console.log("Dd" + car);
-    console.log(carTypes);
-    modalRef.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.createList(car);
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  // private open(car: Car, carTypes: CarType[], title: string, submitButton: string) {
+  //   const modalRef = this.modalService.open(CarDialogComponent, { backdrop: 'static' });
+  //   modalRef.componentInstance.title = title;
+  //   modalRef.componentInstance.submitButton = submitButton;
+  //   modalRef.componentInstance.car = car;
+  //   modalRef.componentInstance.carTypes = carTypes;
+  //   console.log("Dd" + car);
+  //   console.log(carTypes);
+  //   modalRef.result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //     this.createList(car);
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
 
-  }
+  // }
 
 
   private createList(car: Car) {

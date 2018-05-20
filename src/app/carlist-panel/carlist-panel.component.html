@@ -16,7 +16,7 @@
         [class.list-group-item-info]="true" (click)="gotoList(car)">
         {{car.madeYear + " "+ car.make + " " +car.model}}
         <div>
-          <button type="button" class="close" (click)="deleteCarList(car)" aria-label="Close">
+          <button type="button" class="close" (click)="deleteCar(car)" aria-label="Close">
             &times;
           </button>
           <button type="button" class="close" (click)="openEdit(car,carTypes)">

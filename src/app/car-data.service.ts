@@ -16,6 +16,10 @@ export class CarDataService {
     return this.api.saveCar(car);
   }
 
+  delete(car: Car): Observable<Car> {
+    return this.api.deleteCar(car);
+  }
+
   getAllCarTypes(): Observable<CarType[]> {
     return this.api.getAllCarTypes();
   }

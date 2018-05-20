@@ -28,6 +28,9 @@ export class CarlistPanelComponent implements OnInit {
   @Output()
   addUpdate: EventEmitter<Car> = new EventEmitter();
 
+  @Output()
+  delete: EventEmitter<Car> = new EventEmitter();
+
   ngOnInit() {
   }
 
@@ -39,34 +42,48 @@ export class CarlistPanelComponent implements OnInit {
 
   addCar(carTypes) {
     let aCar = new Car();
-    this.open(aCar, carTypes, 'Insert New Car', 'Create');
+    this.open(aCar, aCar, carTypes, 'Insert New Car', 'Create');
   }
   openEdit(car, carTypes) {
-    this.open(car, carTypes, 'Edit Car', 'Update');
+    let newCar = Object.assign({}, car);
+    let oldCar = Object.assign({}, car);
+    this.open(newCar, oldCar, carTypes, 'Edit Car', 'Update');
   }
 
+  deleteCar(car: Car) {
+    const modalRef = this.modalService.open(DelConfirmDialogComponent);
+    modalRef.componentInstance.textConfirmation = 'Do you want to delete this car from list?';
+    modalRef.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.deleteList(car);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
-  private open(car: Car, carTypes: CarType[], title: string, submitButton: string) {
+  private open(car: Car, oldCar: Car, carTypes: CarType[], title: string, submitButton: string) {
     const modalRef = this.modalService.open(CarDialogComponent, { backdrop: 'static' });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.submitButton = submitButton;
     modalRef.componentInstance.car = car;
     modalRef.componentInstance.carTypes = carTypes;
-    console.log("Car6 " + car);
-    console.log(carTypes);
+    //console.log("Car6 " + car);
+    //console.log(carTypes);
     modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       this.createList(car);
-      console.log("after " + car.make);
     }, (reason) => {
+      car = Object.assign({}, oldCar);
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
 
   }
   private createList(car: Car) {
-    console.log("add 5 " + car)
     this.addUpdate.emit(car);
-    //this.carDataService.save(car);
+  }
+
+  private deleteList(car: Car) {
+    this.delete.emit(car);
   }
   private gotoList(car: Car) {
     console.log(car);
