@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Car } from '../car';
+import { CarType } from '../carType';
 import { CarDataService } from '../car-data.service';
 import { CarDialogComponent } from "../car-dialog/car-dialog.component";
 import { DelConfirmDialogComponent } from "../del-confirm-dialog/del-confirm-dialog.component";
@@ -12,6 +13,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class CarListComponent implements OnInit {
   closeResult: string;
   cars: Car[] = [];
+  car: Car = new Car();
+
+  carTypes: CarType[] = [];
   constructor(private carDataService: CarDataService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -22,24 +26,41 @@ export class CarListComponent implements OnInit {
           this.cars = cars;
         }
       );
+
+    this.carDataService
+      .getAllCarTypes()
+      .subscribe(
+        (carTypes) => {
+          this.carTypes = carTypes;
+        }
+      );
   }
 
-  onAddCar(car) {
-
-    console.log(car);
-    this.open(car, 'Insert New Car', 'Create');
+  onAddUpdate(car) {
+    console.log("parent p " + car.make);
+    this.carDataService
+      .save(car)
+      .subscribe(
+        (newCar) => {
+          this.cars = this.cars.concat(newCar);
+        }
+      );
   }
 
-  private addNewCar() {
-    let car = new Car();
-    this.open(car, 'Insert New Car', 'Create');
+  onAddCar(car, carTypes) {
+    this.open(car, carTypes, 'Insert New Car', 'Create');
   }
 
-  private open(car: Car, title: string, submitButton: string) {
+
+
+  private open(car: Car, carTypes: CarType[], title: string, submitButton: string) {
     const modalRef = this.modalService.open(CarDialogComponent, { backdrop: 'static' });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.submitButton = submitButton;
     modalRef.componentInstance.car = car;
+    modalRef.componentInstance.carTypes = carTypes;
+    console.log("Dd" + car);
+    console.log(carTypes);
     modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       this.createList(car);
@@ -51,6 +72,14 @@ export class CarListComponent implements OnInit {
 
 
   private createList(car: Car) {
+    console.log(car)
+    this.carDataService
+      .save(car)
+      .subscribe(
+        (newCar) => {
+          this.cars = this.cars.concat(newCar);
+        }
+      );
     //this.carDataService.save(car);
   }
 

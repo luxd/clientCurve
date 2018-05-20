@@ -16,26 +16,25 @@
         <div class="form-group">
           <label for="list-model">Model</label>
           <input type="text" class="form-control" id="list-model" name="list-model" maxlength="30" placeholder="Car model" [(ngModel)]="car.model"
-            required>
+            [ngModelOptions]="{standalone: true}" required>
         </div>
         <div class="form-group">
           <label for="list-madeYear">Year</label>
           <input type="number" class="form-control" id="list-madeYear" name="list-madeYear" maxlength="10" placeholder="Made year"
-            min="1900" [(ngModel)]="car.madeYear" required>
+            min="1900" [(ngModel)]="car.madeYear" [ngModelOptions]="{standalone: true}" required>
         </div>
         <div class="form-group">
           <label for="list-odometer">Odometer</label>
           <input type="number" class="form-control" id="list-odometer" name="list-odometer" maxlength="10" placeholder="Odometer" [(ngModel)]="car.odometer"
-            required>
+            [ngModelOptions]="{standalone: true}" required>
         </div>
         <div class="form-group">
           <label for="list-cartype">Car Type</label>
 
-          <select class="form-control" id="sel1">
-            <option value="1">Gas</option>
-            <option value="2">Desel</option>
-            <option value="3">Hybrid</option>
-            <option value="4">Electric</option>
+          <select class="form-control" id="list-carType" [(ngModel)]="car.carTypeId" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let carType of carTypes" [value]="carType.carTypeId" [attr.selected]="car.carTypeId==carType.carTypeId ? true : null">
+              {{carType.carTypeName}}
+            </option>
           </select>
 
         </div>

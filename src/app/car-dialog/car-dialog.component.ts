@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { Car } from '../car';
+import { CarType } from '../carType';
+
 @Component({
   selector: 'app-car-dialog',
   templateUrl: './car-dialog.component.html',
@@ -13,6 +15,9 @@ export class CarDialogComponent implements OnInit {
   submitButton: string;
   @Input()
   car: Car;
+  @Input()
+  carTypes: CarType[];
+
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {

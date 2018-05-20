@@ -2,7 +2,7 @@
   <div class="card-header card-info card-inverse">
     <i class="fa fa-car" aria-hidden="true"></i>
     Car List
-    <button type="button" class="btn btn-success  btn-sm pull-right" (click)="addCar()">
+    <button type="button" class="btn btn-success  btn-sm pull-right" (click)="addCar(carTypes)">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
   </div>
@@ -13,13 +13,13 @@
     </div>
     <div class="list-group">
       <a class="list-group-item list-group-item-action d-flex w-100 justify-content-between" *ngFor="let car of cars; let i = index; trackBy: trackCarList"
-        [class.list-group-item-info]="true" (click)="gotoList(list)">
+        [class.list-group-item-info]="true" (click)="gotoList(car)">
         {{car.madeYear + " "+ car.make + " " +car.model}}
         <div>
           <button type="button" class="close" (click)="deleteCarList(car)" aria-label="Close">
             &times;
           </button>
-          <button type="button" class="close" (click)="openEdit(car)">
+          <button type="button" class="close" (click)="openEdit(car,carTypes)">
             <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;&nbsp;
           </button>
         </div>

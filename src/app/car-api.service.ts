@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { environment } from '../environments/environment.prod';
 import { Car } from './car';
+import { CarType } from './carType';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -24,8 +25,24 @@ export class CarApiService {
       .catch(this.handleError);
   }
 
+  public saveCar(car: Car): Observable<Car> {
+    return this.http
+      .post(API_URL + '/car', car)
+      .map(response => {
+        return new Car(response.json());
+      })
+      .catch(this.handleError);
+  }
 
-
+  public getAllCarTypes(): Observable<CarType[]> {
+    return this.http
+      .get(API_URL + '/car_types')
+      .map(response => {
+        const carTypes = response.json();
+        return carTypes.map((carType) => new CarType(carType));
+      })
+      .catch(this.handleError);
+  }
   private handleError(error: Response | any) {
     console.error('ApiService::handleError', error);
     return Observable.throw(error);

@@ -1,7 +1,7 @@
 <div class="row">
   <!-- Left Column -->
   <div class="col-md-3">
-    <app-carlist-panel [cars]="cars" (add)="onAddCar($event)"></app-carlist-panel>
+    <app-carlist-panel [cars]="cars" [car]="car" [carTypes]="carTypes" (addUpdate)="onAddUpdate($event)"></app-carlist-panel>
   </div>
   <!-- Right Column -->
   <div class="col-md-9">
