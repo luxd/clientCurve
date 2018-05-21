@@ -41,20 +41,24 @@ export class ServicelistTableComponent implements OnInit {
   deleteService: EventEmitter<ServiceRecord> = new EventEmitter();
 
   ngOnInit() {
+
   }
   addService() {
     let aService = new ServiceRecord();
+    aService.serviceTypes = new Array<ServiceType>();
     this.open(aService, aService, 'Insert New Maintenance Record', 'Create');
   }
   openEdit(service) {
     let newService = Object.assign({}, service);
+    newService.serviceTypes = Object.assign([], service.serviceTypes);
     let oldService = Object.assign({}, service);
+    oldService.serviceTypes = Object.assign([], service.serviceTypes);
     this.open(newService, oldService, 'Edit Maintenance Record', 'Update');
   }
 
   deleteServiceRecord(service: ServiceRecord) {
     const modalRef = this.modalService.open(DelConfirmDialogComponent);
-    modalRef.componentInstance.textConfirmation = 'Do you want to delete this car from list?';
+    modalRef.componentInstance.textConfirmation = 'Do you want to delete this maintenance record from list?';
     modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       this.deleteList(service);
@@ -67,14 +71,15 @@ export class ServicelistTableComponent implements OnInit {
     const modalRef = this.modalService.open(ServiceDialogComponent, { backdrop: 'static' });
     modalRef.componentInstance.title = title;
     modalRef.componentInstance.submitButton = submitButton;
-    modalRef.componentInstance.service = ServiceRecord;
-    //console.log("Car6 " + car);
-    //console.log(carTypes);
+    modalRef.componentInstance.service = service;
+    modalRef.componentInstance.serviceTypes = this.serviceTypes;
+    modalRef.componentInstance.serviceTypesAvail = this.mapCarTypeServiceType.get(this.selectedCarTypeId);
     modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       this.createList(service);
     }, (reason) => {
-      service = Object.assign({}, oldService);
+      service = oldService;
+      service.serviceTypes = Object.assign([], oldService.serviceTypes);
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
 

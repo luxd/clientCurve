@@ -37,10 +37,28 @@ export class CarApiService {
       .catch(this.handleError);
   }
 
+  public saveService(selectedCarId: number, serviceRecord: ServiceRecord): Observable<ServiceRecord> {
+    return this.http
+      .post(API_URL + '/car/' + selectedCarId + "/services", serviceRecord)
+      .map(response => {
+        return new ServiceRecord(response.json());
+      })
+      .catch(this.handleError);
+  }
+
   public deleteCar(car: Car): Observable<any> {
 
     return this.http
       .delete(API_URL + '/car/' + car.carId)
+      .map(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  public deleteService(selectedCarId: number, service: ServiceRecord): Observable<ServiceRecord> {
+    return this.http
+      .delete(API_URL + '/car/' + selectedCarId + "/services/" + service.serviceId)
       .map(response => {
         return response.json();
       })

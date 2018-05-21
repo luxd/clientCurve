@@ -18,9 +18,6 @@
   <div *ngIf="getRightPanelMsg() == ''">
 
 
-
-
-
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -65,12 +62,16 @@
           </tr>
         </tbody>
         <tfoot *ngIf="serviceRecords!= null && serviceRecords.length > 0">
+          <tr>
+            <td class="text-center"></td>
+            <td colspan="5" class="text-left">
+            </td>
+          </tr>
           <tr class="table-info">
             <td class="text-center">Note:</td>
             <td colspan="5" class="text-left">
               <i class="fa fa-check-circle" style="font-size:20px;color:green;"></i> Service is checked &nbsp;&nbsp;
               <i class="fa fa-ban" style="font-size:20px;color:red;"></i> Service not available</td>
-
 
           </tr>
         </tfoot>

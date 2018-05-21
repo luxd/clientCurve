@@ -73,11 +73,28 @@ export class CarListComponent implements OnInit {
       );
   }
 
-  onAddUpdateService(serviceRecord) {
-    console.log("onAddUpdateService")
+  onAddUpdateService(serviceRecord: ServiceRecord) {
+    let isAdd = false;
+    if (serviceRecord.serviceId == 0) {
+      isAdd = true;
+    }
+    this.carDataService
+      .saveService(this.selectedCarId, serviceRecord)
+      .subscribe(
+        (newServiceRecord) => {
+          if (isAdd)
+            this.serviceRecords = this.serviceRecords.concat(newServiceRecord);
+          else
+            this.serviceRecords.map((record, i) => {
+              if (record.serviceId == newServiceRecord.serviceId) {
+                this.serviceRecords[i] = newServiceRecord;
+              }
+            });
+        }
+      );
+    //console.log(serviceRecord)
   }
   onDelete(car) {
-    console.log("del")
     this.carDataService
       .delete(car)
       .subscribe(
@@ -85,16 +102,23 @@ export class CarListComponent implements OnInit {
           this.cars = this.cars.filter(item => item.carId !== car.carId);
         }
       );
+    this.selectedCarId = 0;
   }
 
   onDeleteService(serviceRecord) {
-    console.log("onDeleteService")
+    this.carDataService
+      .deleteService(this.selectedCarId, serviceRecord)
+      .subscribe(
+        () => {
+          this.serviceRecords = this.serviceRecords.filter(item => item.serviceId !== serviceRecord.serviceId);
+        }
+      );
+
   }
 
   onGetServiceList(car) {
     this.selectedCarId = car.carId;
     this.selectedCarTypeId = car.carTypeId;
-    console.log("no is " + this.selectedCarId);
     this.carDataService
       .getServiceRecords(car)
       .subscribe(
@@ -117,7 +141,6 @@ export class CarListComponent implements OnInit {
 
 
   private createList(car: Car) {
-    console.log(car)
     this.carDataService
       .save(car)
       .subscribe(
