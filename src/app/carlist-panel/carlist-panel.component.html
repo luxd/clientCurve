@@ -13,7 +13,7 @@
     </div>
     <div class="list-group">
       <a class="list-group-item list-group-item-action d-flex w-100 justify-content-between" *ngFor="let car of cars; let i = index; trackBy: trackCarList"
-        [class.list-group-item-info]="true" (click)="gotoList(car)">
+        [class.list-group-item-info]="selectedCarId==car.carId" (click)="gotoServiceList(car)">
         {{car.madeYear + " "+ car.make + " " +car.model}}
         <div>
           <button type="button" class="close" (click)="deleteCar(car)" aria-label="Close">

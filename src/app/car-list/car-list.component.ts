@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Car } from '../car';
 import { CarType } from '../carType';
+import { ServiceType } from '../serviceType';
+import { ServiceRecord } from '../serviceRecord';
 import { CarDataService } from '../car-data.service';
 import { CarDialogComponent } from "../car-dialog/car-dialog.component";
 import { DelConfirmDialogComponent } from "../del-confirm-dialog/del-confirm-dialog.component";
@@ -13,9 +15,13 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class CarListComponent implements OnInit {
   closeResult: string;
   cars: Car[] = [];
-  car: Car = new Car();
-
+  selectedCarId: number = 0;
+  selectedCarTypeId: number = 0;
   carTypes: CarType[] = [];
+  serviceTypes: ServiceType[] = [];
+  serviceRecords: ServiceRecord[] = [];
+  mapCarTypeServiceType: Map<number, number[]> = new Map<number, number[]>(); //carTypeId:serviceTypeId[]
+  instruction: String;
   constructor(private carDataService: CarDataService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -34,7 +40,17 @@ export class CarListComponent implements OnInit {
           this.carTypes = carTypes;
         }
       );
+
+
+    this.carDataService
+      .getAllServiceTypes()
+      .subscribe(
+        (serviceTypes) => {
+          this.serviceTypes = serviceTypes;
+        }
+      );
   }
+
 
   onAddUpdate(car) {
     let isAdd = false;
@@ -57,6 +73,9 @@ export class CarListComponent implements OnInit {
       );
   }
 
+  onAddUpdateService(serviceRecord) {
+    console.log("onAddUpdateService")
+  }
   onDelete(car) {
     console.log("del")
     this.carDataService
@@ -67,28 +86,34 @@ export class CarListComponent implements OnInit {
         }
       );
   }
-  // onAddCar(car, carTypes) {
-  //   this.open(car, carTypes, 'Insert New Car', 'Create');
-  // }
 
+  onDeleteService(serviceRecord) {
+    console.log("onDeleteService")
+  }
 
+  onGetServiceList(car) {
+    this.selectedCarId = car.carId;
+    this.selectedCarTypeId = car.carTypeId;
+    console.log("no is " + this.selectedCarId);
+    this.carDataService
+      .getServiceRecords(car)
+      .subscribe(
+        (serviceRecords) => {
+          this.serviceRecords = serviceRecords;
+        }
+      );
+    //this.selectedCar = Object.assign({}, car);
+    if (this.mapCarTypeServiceType.get(car.carTypeId) == null) {
+      this.carDataService
+        .getCarTypeAvailServices(car)
+        .subscribe(
+          (serviceRecords) => {
+            this.mapCarTypeServiceType.set(car.carTypeId, serviceRecords);
+          }
+        );
+    }
+  }
 
-  // private open(car: Car, carTypes: CarType[], title: string, submitButton: string) {
-  //   const modalRef = this.modalService.open(CarDialogComponent, { backdrop: 'static' });
-  //   modalRef.componentInstance.title = title;
-  //   modalRef.componentInstance.submitButton = submitButton;
-  //   modalRef.componentInstance.car = car;
-  //   modalRef.componentInstance.carTypes = carTypes;
-  //   console.log("Dd" + car);
-  //   console.log(carTypes);
-  //   modalRef.result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //     this.createList(car);
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-
-  // }
 
 
   private createList(car: Car) {

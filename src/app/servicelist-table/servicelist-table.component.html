@@ -1,3 +1,81 @@
-<p>
-  servicelist-table works!
-</p>
+<div class="card card-info">
+  <div class="card-header">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    Maintenance Record List
+    <ng-template [ngIf]="selectedCarId!=0">
+      <button type="button" class="btn btn-success  btn-sm pull-right" (click)="addService()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </button>
+    </ng-template>
+  </div>
+</div>
+<div class="card-block">
+  <div *ngIf="getRightPanelMsg() != ''" class="jumbotron">
+    <h1 class="display-4">Hi</h1>
+    <p class="lead">{{getRightPanelMsg()}}</p>
+
+  </div>
+  <div *ngIf="getRightPanelMsg() == ''">
+
+
+
+
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="text-center" *ngFor="let serviceType of serviceTypes; let i = index">{{serviceType.serviceTypeName}}</td>
+            <td>Date</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-template [ngIf]="serviceRecords!= null && serviceRecords.length == 0">
+            <tr>
+              <td colspan="6">No Maintenance record found!</td>
+            </tr>
+          </ng-template>
+
+
+          <tr *ngFor="let serviceRecord of serviceRecords; let i = index">
+
+            <td class="text-center" *ngFor="let serviceType of serviceTypes; let i = index">
+              <ng-template [ngIf]="!checkAllowed(selectedCarTypeId, serviceType.serviceTypeId)">
+                <i class="fa fa-ban" style="font-size:20px;color:red;"></i>
+              </ng-template>
+              <ng-template [ngIf]="checkServiceDone(serviceRecord.serviceTypes, serviceType.serviceTypeId)">
+                <i class="fa fa-check-circle" style="font-size:20px;color:green;"></i>
+              </ng-template>
+
+            </td>
+            <td>{{serviceRecord.serviceDate | date}}</td>
+            <td>
+              <div>
+                <button type="button" class="close" (click)="deleteServiceRecord(serviceRecord)" aria-label="Close">
+                  &times;
+                </button>
+                <button type="button" class="close" (click)="openEdit(serviceRecord)">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;&nbsp;
+                </button>
+              </div>
+            </td>
+
+
+          </tr>
+        </tbody>
+        <tfoot *ngIf="serviceRecords!= null && serviceRecords.length > 0">
+          <tr class="table-info">
+            <td class="text-center">Note:</td>
+            <td colspan="5" class="text-left">
+              <i class="fa fa-check-circle" style="font-size:20px;color:green;"></i> Service is checked &nbsp;&nbsp;
+              <i class="fa fa-ban" style="font-size:20px;color:red;"></i> Service not available</td>
+
+
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>

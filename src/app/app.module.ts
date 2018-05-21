@@ -12,6 +12,7 @@ import { CarDataService } from './car-data.service';
 import { HttpModule } from '@angular/http';
 import { CarDialogComponent } from './car-dialog/car-dialog.component';
 import { DelConfirmDialogComponent } from './del-confirm-dialog/del-confirm-dialog.component';
+import { ServiceDialogComponent } from './service-dialog/service-dialog.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DelConfirmDialogComponent } from './del-confirm-dialog/del-confirm-dial
     CarlistPanelComponent,
     ServicelistTableComponent,
     CarDialogComponent,
-    DelConfirmDialogComponent
+    DelConfirmDialogComponent,
+    ServiceDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,6 @@ import { DelConfirmDialogComponent } from './del-confirm-dialog/del-confirm-dial
   ],
   providers: [CarApiService, CarDataService],
   bootstrap: [AppComponent],
-  entryComponents: [DelConfirmDialogComponent, CarDialogComponent]
+  entryComponents: [DelConfirmDialogComponent, CarDialogComponent, ServiceDialogComponent]
 })
 export class AppModule { }

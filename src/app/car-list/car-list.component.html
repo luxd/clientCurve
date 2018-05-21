@@ -1,28 +1,14 @@
 <div class="row">
   <!-- Left Column -->
-  <div class="col-md-3">
-    <app-carlist-panel [cars]="cars" [car]="car" [carTypes]="carTypes" (addUpdate)="onAddUpdate($event)" (delete)="onDelete($event)"></app-carlist-panel>
+  <div class="col-md-4">
+    <app-carlist-panel [cars]="cars" [carTypes]="carTypes" [selectedCarId]="selectedCarId" (addUpdate)="onAddUpdate($event)"
+      (delete)="onDelete($event)" (getServiceList)="onGetServiceList($event)"></app-carlist-panel>
   </div>
   <!-- Right Column -->
-  <div class="col-md-9">
-    <div class="card card-info">
-      <div class="card-header">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        Description
-        <button type="button" class="btn btn-success  btn-sm pull-right" (click)="openAdd()">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-    <div class="card-block">
-      <div *ngIf="true" class="jumbotron">
-        <h1 class="display-4">Woof.</h1>
-        <p class="lead">Looks like you haven't added any stocks to this watchlist yet!</p>
-        <p>Do so now by clicking the
-          <i class="fa fa-plus" aria-hidden="true"></i> located above.</p>
-      </div>
-      <app-servicelist-table></app-servicelist-table>
-    </div>
+  <div class="col-md-8">
+    <app-servicelist-table [cars]="cars" [selectedCarId]="selectedCarId" [serviceTypes]="serviceTypes" [serviceRecords]="serviceRecords"
+      [selectedCarTypeId]="selectedCarTypeId" [mapCarTypeServiceType]="mapCarTypeServiceType" (addUpdateService)="onAddUpdate($event)"
+      (deleteService)="onDelete($event)"></app-servicelist-table>
   </div>
 
 </div>

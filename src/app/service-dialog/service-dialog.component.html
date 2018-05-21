@@ -1,0 +1,56 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">{{title}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form role="form" id="add-list" #listForm="ngForm">
+
+
+        <!-- <div class="form-group">
+          <label for="list-make">Make</label>
+          <input type="text" class="form-control" id="list-make" name="list-make" maxlength="30" placeholder="Car make" [(ngModel)]="car.make"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="list-model">Model</label>
+          <input type="text" class="form-control" id="list-model" name="list-model" maxlength="30" placeholder="Car model" [(ngModel)]="car.model"
+            [ngModelOptions]="{standalone: true}" required>
+        </div>
+        <div class="form-group">
+          <label for="list-madeYear">Year</label>
+          <input type="number" class="form-control" id="list-madeYear" name="list-madeYear" maxlength="10" placeholder="Made year"
+            min="1900" [(ngModel)]="car.madeYear" [ngModelOptions]="{standalone: true}" required>
+        </div>
+        <div class="form-group">
+          <label for="list-odometer">Odometer</label>
+          <input type="number" class="form-control" id="list-odometer" name="list-odometer" maxlength="10" placeholder="Odometer" [(ngModel)]="car.odometer"
+            [ngModelOptions]="{standalone: true}" required>
+        </div>
+        <div class="form-group">
+          <label for="list-cartype">Car Type</label>
+
+          <select class="form-control" id="list-carType" [(ngModel)]="car.carTypeId" [ngModelOptions]="{standalone: true}">
+            <option [value]="0">-- Select --</option>
+            <option *ngFor="let carType of carTypes" [value]="carType.carTypeId" [attr.selected]="car.carTypeId==carType.carTypeId ? true : null">
+              {{carType.carTypeName}}
+            </option>
+          </select>
+
+        </div> -->
+
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <!-- Create list on click, but disable if form is invalid -->
+      <button type="submit" class="btn btn-success" (click)="activeModal.close('Submit click')" [disabled]="!listForm.valid || service.serviceId == 0">{{submitButton}}
+      </button>
+      <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cancel click')">Cancel
+      </button>
+    </div>
+  </div>
+</div>

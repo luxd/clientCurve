@@ -19,17 +19,21 @@ export class CarlistPanelComponent implements OnInit {
 
   @Input()
   cars: Car[];
-  @Input()
-  car: Car;
 
   @Input()
   carTypes: CarType[];
+
+  @Input()
+  selectedCarId: number;
 
   @Output()
   addUpdate: EventEmitter<Car> = new EventEmitter();
 
   @Output()
   delete: EventEmitter<Car> = new EventEmitter();
+
+  @Output()
+  getServiceList: EventEmitter<Car> = new EventEmitter();
 
   ngOnInit() {
   }
@@ -85,8 +89,10 @@ export class CarlistPanelComponent implements OnInit {
   private deleteList(car: Car) {
     this.delete.emit(car);
   }
-  private gotoList(car: Car) {
-    console.log(car);
+  private gotoServiceList(car: Car) {
+    this.getServiceList.emit(car);
+    //this.selectedCarId = car.carId;
+    //console.log(this.selectedCarId);
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

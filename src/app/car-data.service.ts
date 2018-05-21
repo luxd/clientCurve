@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { CarApiService } from './car-api.service';
 import { Car } from './car';
 import { CarType } from './carType';
+import { ServiceType } from './serviceType';
 import { Observable } from 'rxjs/Observable';
+import { ServiceRecord } from './serviceRecord';
 @Injectable()
 export class CarDataService {
 
@@ -24,4 +26,15 @@ export class CarDataService {
     return this.api.getAllCarTypes();
   }
 
+  getAllServiceTypes(): Observable<ServiceType[]> {
+    return this.api.getAllServiceTypes();
+  }
+
+  getServiceRecords(car: Car): Observable<ServiceRecord[]> {
+    return this.api.getServiceRecords(car);
+  }
+
+  getCarTypeAvailServices(car: Car): Observable<number[]> {
+    return this.api.getCarTypeAvailServices(car);
+  }
 }
