@@ -17,6 +17,9 @@ export class ServicelistTableComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   @Input()
+  isLoading: boolean;
+
+  @Input()
   cars: Car[];
 
   @Input()

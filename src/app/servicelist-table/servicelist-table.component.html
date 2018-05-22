@@ -28,9 +28,14 @@
           </tr>
         </thead>
         <tbody>
-          <ng-template [ngIf]="serviceRecords!= null && serviceRecords.length == 0">
+          <ng-template [ngIf]="isLoading == false && serviceRecords!= null && serviceRecords.length == 0">
             <tr>
               <td colspan="6">No Maintenance record found!</td>
+            </tr>
+          </ng-template>
+          <ng-template [ngIf]="isLoading">
+            <tr>
+              <td colspan="6">Data is loading...</td>
             </tr>
           </ng-template>
 

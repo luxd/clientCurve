@@ -7,7 +7,7 @@
   <!-- Right Column -->
   <div class="col-md-8">
     <app-servicelist-table [cars]="cars" [selectedCarId]="selectedCarId" [serviceTypes]="serviceTypes" [serviceRecords]="serviceRecords"
-      [selectedCarTypeId]="selectedCarTypeId" [mapCarTypeServiceType]="mapCarTypeServiceType" (addUpdateService)="onAddUpdateService($event)"
+      [selectedCarTypeId]="selectedCarTypeId" [mapCarTypeServiceType]="mapCarTypeServiceType" [isLoading]="isLoading" (addUpdateService)="onAddUpdateService($event)"
       (deleteService)="onDeleteService($event)"></app-servicelist-table>
   </div>
 

@@ -20,6 +20,7 @@ export class CarListComponent implements OnInit {
   carTypes: CarType[] = [];
   serviceTypes: ServiceType[] = [];
   serviceRecords: ServiceRecord[] = [];
+  isLoading: boolean = false;
   mapCarTypeServiceType: Map<number, number[]> = new Map<number, number[]>(); //carTypeId:serviceTypeId[]
   instruction: String;
   constructor(private carDataService: CarDataService, private modalService: NgbModal) { }
@@ -119,11 +120,14 @@ export class CarListComponent implements OnInit {
   onGetServiceList(car) {
     this.selectedCarId = car.carId;
     this.selectedCarTypeId = car.carTypeId;
+    this.serviceRecords = [];
+    this.isLoading = true;
     this.carDataService
       .getServiceRecords(car)
       .subscribe(
         (serviceRecords) => {
           this.serviceRecords = serviceRecords;
+          this.isLoading = false;
         }
       );
     //this.selectedCar = Object.assign({}, car);
