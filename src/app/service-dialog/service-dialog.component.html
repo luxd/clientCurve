@@ -27,7 +27,7 @@
         </div>
 
         <!--repeat start-->
-        <div class="row" *ngFor="let serviceType of serviceTypes; let i = index; trackBy: trackCarList">
+        <div class="row" *ngFor="let serviceType of serviceTypes; let i = index">
           <div class="col-md-4">
             <div class="form-group">
               <label for="list-make">{{serviceType.serviceTypeName}}</label>

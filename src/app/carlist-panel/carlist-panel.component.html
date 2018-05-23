@@ -12,7 +12,7 @@
       <i class="fa fa-plus" aria-hidden="true"></i> to create a list
     </div>
     <div class="list-group">
-      <a class="list-group-item list-group-item-action d-flex w-100 justify-content-between" *ngFor="let car of cars; let i = index; trackBy: trackCarList"
+      <a class="list-group-item list-group-item-action d-flex w-100 justify-content-between" *ngFor="let car of cars; let i = index"
         [class.list-group-item-info]="selectedCarId==car.carId" (click)="gotoServiceList(car)">
         {{car.madeYear + " "+ car.make + " " +car.model}}
         <div>

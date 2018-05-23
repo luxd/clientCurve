@@ -12,6 +12,10 @@ export class ServiceDialogComponent implements OnInit {
   serviceTypesChecked: number[];
   canSubmit: boolean = false;
   @Input()
+  title: string;
+  @Input()
+  submitButton: string;
+  @Input()
   service: ServiceRecord;
 
   @Input()
